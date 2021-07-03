@@ -19,5 +19,8 @@
   "homepage": "https://github.com/amnasyeda/note-taker#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
   }
 }
