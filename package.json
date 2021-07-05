@@ -1,17 +1,18 @@
 {
   "name": "note-taker",
   "version": "1.0.0",
-  "description": "",
+  "description": "An application which allows the user to create, save, and delete notes. ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "lite-server"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/amnasyeda/note-taker.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Amna Syeda",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/amnasyeda/note-taker/issues"
@@ -23,6 +24,7 @@
     "npm-reinstall": "^3.1.0"
   },
   "devDependencies": {
-    "jest": "^27.0.6"
+    "jest": "^27.0.6",
+    "lite-server": "^2.6.1"
   }
 }
