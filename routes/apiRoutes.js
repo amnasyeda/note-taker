@@ -3,11 +3,10 @@ const db = require('../db/db.json');
 const router = require('express').Router();
 const fs = require('fs');
 
-
 router.get('/api/notes', (req, res) => {
     const notes = JSON.parse(
       fs.readFileSync(path.join(__dirname, '../db/db.json'))
-    );
+     );
     res.json(notes);
   });
   router.post('/api/notes', (req, res) => {
