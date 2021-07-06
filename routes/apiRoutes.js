@@ -1,5 +1,5 @@
 const path = require('path');
-const db = require('../db/db.json');
+const notesFile = require('../db/db.json');
 const router = require('express').Router();
 const fs = require('fs');
 
@@ -9,6 +9,7 @@ router.get('/api/notes', (req, res) => {
      );
     res.json(notes);
   });
+
   router.post('/api/notes', (req, res) => {
     const notes = JSON.parse(
       fs.readFileSync(path.join(__dirname, '../db/db.json'))
@@ -33,19 +34,19 @@ router.get('/api/notes', (req, res) => {
         path.join(__dirname, '../db/db.json'),
         'utf8',
         (err, data) => {
-          console.log('inside the read', data);
+          console.log('content of read file', data);
           if (err) throw err;
-          const createNotes = JSON.parse(data);
-          const deleteNote = createNotes.filter(
-            (dltNote) => dltNote.id !== req.params.id
+          const allNotes = JSON.parse(data);
+          const delNote = allNotes.filter(
+            (rmvNote) => rmvNote.id !== req.params.id
           );
-          console.log('********', deleteNote);
+          console.log('********', delNote);
     
           fs.writeFileSync(
             path.join(__dirname, '../db/db.json'),
-            JSON.stringify(deleteNote)
+            JSON.stringify(delNote)
           );
-          res.json(deleteNote);
+          res.json(delNote);
         }
       );
     });
