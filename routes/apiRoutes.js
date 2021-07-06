@@ -40,7 +40,7 @@ router.get('/api/notes', (req, res) => {
           const delNote = allNotes.filter(
             (rmvNote) => rmvNote.id !== req.params.id
           );
-          console.log('********', delNote);
+          console.log('Note has been deleted!', delNote);
     
           fs.writeFileSync(
             path.join(__dirname, '../db/db.json'),
