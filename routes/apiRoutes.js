@@ -24,6 +24,8 @@ router.get('/api/notes', (req, res) => {
     );
     res.send('A new note has been created!');
   });
+
+    // To delete a note
   router.delete('/api/notes/:id', (req, res) => {
     console.log(req.params.id);
 
