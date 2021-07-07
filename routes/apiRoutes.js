@@ -34,7 +34,7 @@ router.get('/api/notes', (req, res) => {
         path.join(__dirname, '../db/db.json'),
         'utf8',
         (err, data) => {
-          console.log('content of read file', data);
+          console.log('content of file', data);
           if (err) throw err;
           const allNotes = JSON.parse(data);
           const delNote = allNotes.filter(
