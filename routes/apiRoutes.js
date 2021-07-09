@@ -25,7 +25,7 @@ module.exports = function(app){
             req.body.id = JSON.stringify(JSON.parse(notesData[notesData.length - 1].id) + 1);
         }
         
-        console.log("req.body.id: " + req.body.id);
+        console.log("req.body.id:" + req.body.id);
 
         notesData.push(req.body);
 
@@ -43,7 +43,7 @@ module.exports = function(app){
         for (i=0; i < notesData.length; i++){
            
             if (notesData[i].id == id){
-                console.log("match!");
+                console.log("created!");
                 res.send(notesData[i]);
 
                 notesData.splice(i,1);
