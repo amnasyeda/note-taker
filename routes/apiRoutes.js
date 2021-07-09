@@ -1,55 +1,58 @@
-const path = require('path');
-const notesFile = require('../db/db.json');
-const router = require('express').Router();
-const fs = require('fs');
+const fs = require("fs");
+const notesData = require("../db/db.json");
 
-router.get('/api/notes', (req, res) => {
-    const notes = JSON.parse(
-      fs.readFileSync(path.join(__dirname, '../db/db.json'))
-     );
-    res.json(notes);
-  });
+module.exports = function(app){
 
-  router.post('/api/notes', (req, res) => {
-    const notes = JSON.parse(
-      fs.readFileSync(path.join(__dirname, '../db/db.json'))
-    );
-    const newNote = req.body;
-  
-    // To create a new note 
-    newNote.id = notesFile.length.toString();
-    notes.push(newNote);
-    fs.writeFileSync(
-      path.join(__dirname, '../db/db.json'),
-      JSON.stringify(notes)
-    );
-    res.send('A new note has been created!');
-  });
+    function writeToDB(notes){
+        notes = JSON.stringify(notes);
+        console.log (notes);
+        fs.writeFileSync("./db/db.json", notes, function(err){
+            if (err) {
+                return console.log(err);
+            }
+        });
+    }
 
-    // To delete a note
-  router.delete('/api/notes/:id', (req, res) => {
-    console.log(req.params.id);
-
-    return fs.readFile(
-        path.join(__dirname, '../db/db.json'),
-        'utf8',
-        (err, data) => {
-          console.log('content of file', data);
-          if (err) throw err;
-          const allNotes = JSON.parse(data);
-          const delNote = allNotes.filter(
-            (rmvNote) => rmvNote.id !== req.params.id
-          );
-          console.log('Note has been deleted!', delNote);
-    
-          fs.writeFileSync(
-            path.join(__dirname, '../db/db.json'),
-            JSON.stringify(delNote)
-          );
-          res.json(delNote);
-        }
-      );
+    app.get("/api/notes", function(req, res){
+        res.json(notesData);
     });
 
-  module.exports = router;
+    app.post("/api/notes", function(req, res){
+
+        if (notesData.length == 0){
+            req.body.id = "0";
+        } else{
+            req.body.id = JSON.stringify(JSON.parse(notesData[notesData.length - 1].id) + 1);
+        }
+        
+        console.log("req.body.id: " + req.body.id);
+
+        notesData.push(req.body);
+
+        writeToDB(notesData);
+        console.log(notesData);
+
+        res.json(req.body);
+    });
+
+    app.delete("/api/notes/:id", function(req, res){
+        
+        let id = req.params.id.toString();
+        console.log(id);
+
+        for (i=0; i < notesData.length; i++){
+           
+            if (notesData[i].id == id){
+                console.log("match!");
+                res.send(notesData[i]);
+
+                notesData.splice(i,1);
+                break;
+            }
+        }
+
+        writeToDB(notesData);
+
+    });
+}; 
   
