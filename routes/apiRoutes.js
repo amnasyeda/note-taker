@@ -43,7 +43,7 @@ module.exports = function(app){
         for (i=0; i < notesData.length; i++){
            
             if (notesData[i].id == id){
-                console.log("created!");
+                console.log("complete!");
                 res.send(notesData[i]);
 
                 notesData.splice(i,1);
