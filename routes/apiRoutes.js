@@ -1,5 +1,8 @@
 const fs = require('fs');
 const notesData = require('../db/db.json');
+const router = require('express').Router();
+router.post('/api/notes',function(req,res,next){
+ })
 
 module.exports = function(app){
 
@@ -13,7 +16,7 @@ module.exports = function(app){
         });
     }
 
-    app.get('/api/notes', function(req, res){
+    app.get('/api/notes', function(req, res,) {
         res.json(notesData);
     });
 
@@ -55,4 +58,3 @@ module.exports = function(app){
 
     });
 }; 
-  
