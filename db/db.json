@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "title": "Sample note 1",
+    "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.\nList:\nitem 1\nitem 2",
+    "id": "af366724-e679-44e3-bd5f-3fa8ea6e4de8"
+  },
+  {
+    "title": "Sample note 2",
+    "text": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+    "id": "caf58087-ecfd-4d22-9160-5d2beeafa6a8"
+  }
+]
