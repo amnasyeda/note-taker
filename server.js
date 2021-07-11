@@ -8,7 +8,8 @@ require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
 app.use(express.json());
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + '/public'));
+app.use(express.static('./'));
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(PORT, () => {  console.log(`API server now on port ${PORT}!`);});

@@ -1,56 +1,32 @@
 const fs = require('fs');
-const notesData = require('../db/db.json');
 
-module.exports = function(app){
+module.exports = (app) => {
+    let noteList = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
 
-    function writeToDB(notes){
-        notes = JSON.stringify(notes);
-        console.log (notes);
-        fs.writeFileSync('./db/db.json', notes, function(err){
-            if (err) {
-                return console.log(err);
-            }
-        });
-    }
-
-    app.get('/api/notes', function(req, res,) {
-        res.json(notesData);
+    app.get('/api/notes', (req, res) => {
+        return res.json(noteList);
     });
 
-    app.post('/api/notes', function(req, res){
-
-        if (notesData.length == 0){
-            req.body.id = '0';
-        } else{
-            req.body.id = JSON.stringify(JSON.parse(notesData[notesData.length - 1].id) + 1);
+    app.post('/api/notes', (req, res) => {
+        let lastId;
+        if (noteList.length) {
+            lastId = Math.max(...(noteList.map(note => note.id)));
+        } else {
+            lastId = 0;
         }
+        const id = lastId + 1;
         
-        console.log('req.body.id:' + req.body.id);
-
-        notesData.push(req.body);
-
-        writeToDB(notesData);
-        console.log(notesData);
-
-        res.json(req.body);
+        noteList.push({ id, ...req.body });
+     
+        res.json(noteList.slice(-1));
     });
 
-    app.delete('/api/notes/:id', function(req, res){
+    // Delete
+    app.delete('/api/notes/:id', (req, res) => {
         
-        let id = req.params.id.toString();
-        console.log(id);
+        let findNote = noteList.find(({ id }) => id === JSON.parse(req.params.id));
 
-        for (i=0; i < notesData.length; i++){
-           
-            if (notesData[i].id == id){
-                console.log('complete!');
-                res.send(notesData[i]);
-
-                notesData.splice(i,1);
-                break;
-            }
-        }
-        writeToDB(notesData);
-
+        noteList.splice(noteList.indexOf(findNote), 1);
+        res.end('Note has been deleted');
     });
-}; 
+};
